@@ -17,7 +17,15 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@natr/tree-refinery": [
+        "dist/natr/tree-refinery"
+      ],
+      "@natr/tree-refinery/*": [
+        "dist/natr/tree-refinery/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
