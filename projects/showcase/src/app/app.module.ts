@@ -7,6 +7,7 @@ import { FilteredTreeComponent } from './components/filtered-tree/filtered-tree.
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {TreeRefineryModule} from '../../../natr/tree-refinery/src/lib/tree-refinery.module';
+import {TheTreesModule} from '@natr/the-trees';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {TreeRefineryModule} from '../../../natr/tree-refinery/src/lib/tree-refin
     AppRoutingModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    TreeRefineryModule
+    TreeRefineryModule,
+    TheTreesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

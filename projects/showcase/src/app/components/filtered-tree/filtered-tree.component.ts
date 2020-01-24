@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {getTreeFilterState} from '../../../../../natr/tree-refinery/src/lib/+state/filter.selectors';
-import {loadFilters} from '../../../../../natr/tree-refinery/src/lib/+state/set-filter.actions';
+import {FilterFacadeService} from '../../../../../natr/tree-refinery/src/lib/services/filter-facade.service';
+import {TreeDataFacadeService} from '@natr/the-trees';
 
 @Component({
   selector: 'app-filtered-tree',
@@ -10,19 +9,14 @@ import {loadFilters} from '../../../../../natr/tree-refinery/src/lib/+state/set-
 })
 export class FilteredTreeComponent implements OnInit {
 
-  constructor(private store: Store<any>) {
+  constructor(private filterFacadeService: FilterFacadeService, private treeDataFacadeService: TreeDataFacadeService) {
   }
 
   ngOnInit() {
-    this.store.select(getTreeFilterState).subscribe(
-      state => {
-        console.log(`${FilteredTreeComponent.name} state is`, state);
-      }
-    );
+    this.treeDataFacadeService.dispatchRemoteLoadTree(new URL('http://localhost:4200/assets/tree.json'));
   }
 
-
   setFilter() {
-    this.store.dispatch(loadFilters({filter: {one: 1}}));
+    this.filterFacadeService.dispatchLoadFilters({one: 1});
   }
 }
