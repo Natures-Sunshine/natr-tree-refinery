@@ -2,7 +2,12 @@
   "name": "@natr/tree-refinery",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^8.2.14",
-    "@angular/core": "^8.2.14"
+    "@angular/common": "^8.0.0",
+    "@angular/core": "^8.0.0",
+    "@natr/the-trees": "^0.0.11",
+    "@ngrx/effects": "^8.0.0",
+    "@ngrx/entity": "^8.0.0",
+    "@ngrx/store": "^8.0.0",
+    "@ngrx/store-devtools": "^8.0.0"
   }
 }

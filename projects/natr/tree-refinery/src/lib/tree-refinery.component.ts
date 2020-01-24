@@ -2,12 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'lib-tree-refinery',
-  template: `
-    <p>
-      tree-refinery works!
-    </p>
-  `,
-  styles: []
+  templateUrl: 'tree-refinery.component.html',
+  styleUrls: ['tree-refinery.component.scss']
 })
 export class TreeRefineryComponent implements OnInit {
 

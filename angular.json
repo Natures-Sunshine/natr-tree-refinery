@@ -159,6 +159,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "@natr/tree-refinery"
+    }
+  },
+  "defaultProject": "@natr/tree-refinery",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
