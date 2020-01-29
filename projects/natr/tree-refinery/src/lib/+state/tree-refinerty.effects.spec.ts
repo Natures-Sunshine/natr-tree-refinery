@@ -2,21 +2,21 @@ import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 
-import { AddFilterInfoEffects } from './add-filter-info.effects';
+import { TreeRefineryEffects } from './tree-refinery.effects';
 
 describe('AddFilterInfoEffects', () => {
   let actions$: Observable<any>;
-  let effects: AddFilterInfoEffects;
+  let effects: TreeRefineryEffects;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        AddFilterInfoEffects,
+        TreeRefineryEffects,
         provideMockActions(() => actions$)
       ]
     });
 
-    effects = TestBed.get<AddFilterInfoEffects>(AddFilterInfoEffects);
+    effects = TestBed.get<TreeRefineryEffects>(TreeRefineryEffects);
   });
 
   it('should be created', () => {
