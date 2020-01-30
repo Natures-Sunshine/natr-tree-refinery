@@ -74,22 +74,7 @@ export class TreeRefineryEffects {
             const deeper = TreeRefineryEffects.getObjectDiff(a[key], b[key]);
             console.log(`${TreeRefineryEffects.name} deeper`, deeper);
 
-            res.matchingKeys = res.matchingKeys.concat(_.map(deeper.matchingKeys, (subPath) => {
-              console.log(`${TreeRefineryEffects.name} key and subPath`, key, subPath);
-              return key + '.' + subPath;
-            }));
 
-            res.different = res.different.concat(_.map(deeper.different, (subPath) => {
-              return key + '.' + subPath;
-            }));
-
-            res.missingFromSecond = res.missingFromSecond.concat(_.map(deeper.missingFromSecond, (subPath) => {
-              return key + '.' + subPath;
-            }));
-
-            res.missingFromFirst = res.missingFromFirst.concat(_.map(deeper.missingFromFirst, (subPath) => {
-              return key + '.' + subPath;
-            }));
             return res;
           }
         }
@@ -110,5 +95,24 @@ export class TreeRefineryEffects {
 
     console.log(`${TreeRefineryEffects.name} search results`, result);
     return result;
+  }
+
+  private static addToLists(res, deeper, key) {
+    res.matchingKeys = res.matchingKeys.concat(_.map(deeper.matchingKeys, (subPath) => {
+      console.log(`${TreeRefineryEffects.name} key and subPath`, key, subPath);
+      return key + '.' + subPath;
+    }));
+
+    res.different = res.different.concat(_.map(deeper.different, (subPath) => {
+      return key + '.' + subPath;
+    }));
+
+    res.missingFromSecond = res.missingFromSecond.concat(_.map(deeper.missingFromSecond, (subPath) => {
+      return key + '.' + subPath;
+    }));
+
+    res.missingFromFirst = res.missingFromFirst.concat(_.map(deeper.missingFromFirst, (subPath) => {
+      return key + '.' + subPath;
+    }));
   }
 }
