@@ -9,6 +9,7 @@ import {TreeDataFacadeService} from '@natr/the-trees';
   encapsulation: ViewEncapsulation.None
 })
 export class FilteredTreeComponent implements OnInit {
+  nodeClass = 'node';
 
   constructor(private filterFacadeService: FilterFacadeService, private treeDataFacadeService: TreeDataFacadeService) {
   }
@@ -23,8 +24,9 @@ export class FilteredTreeComponent implements OnInit {
 
   getClass(node): string | void  {
     console.log(`${FilteredTreeComponent.name}.getClass node`, node);
-    if (node.id === '2') {
+    if (node && node.meta && node.meta.filterMatch) {
       return 'node-inactive';
     }
+    return 'node-group';
   }
 }

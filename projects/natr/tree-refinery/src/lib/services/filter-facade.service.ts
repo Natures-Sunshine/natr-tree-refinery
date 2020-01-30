@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {loadFilters} from '../+state/set-filter.actions';
 
@@ -7,9 +7,14 @@ import {loadFilters} from '../+state/set-filter.actions';
 })
 export class FilterFacadeService {
 
-  constructor(private store: Store<any>) { }
+  constructor(private store: Store<any>) {
+  }
 
   dispatchLoadFilters(filter: any) {
     this.store.dispatch(loadFilters({filter}));
+  }
+
+  getFilterSubscription() {
+    // this.store.select()
   }
 }
