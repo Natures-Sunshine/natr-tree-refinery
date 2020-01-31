@@ -5,3 +5,4 @@
 export * from './lib/tree-refinery.service';
 export * from './lib/tree-refinery.component';
 export * from './lib/tree-refinery.module';
+export * from './lib/services/filter-facade.service';
