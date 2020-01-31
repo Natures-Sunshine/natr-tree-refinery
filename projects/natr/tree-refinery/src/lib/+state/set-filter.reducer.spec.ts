@@ -1,11 +1,11 @@
-import { reducer, initialState } from './set-filter.reducer';
+import {initialState, setFilterReducer} from './set-filter.reducer';
 
 describe('SetFilter Reducer', () => {
   describe('an unknown action', () => {
-    it('should return the previous state', () => {
+    it('should return the previous +state', () => {
       const action = {} as any;
 
-      const result = reducer(initialState, action);
+      const result = setFilterReducer(initialState, action);
 
       expect(result).toBe(initialState);
     });

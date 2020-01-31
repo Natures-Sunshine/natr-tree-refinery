@@ -15,7 +15,7 @@ const onLoadFiltersReducerFunction = (state: FilterState, action: LoadFiltersPro
   return {...state, ...action.filter};
 };
 
-export const setFilterReducerRef = createReducer(
+const setFilterReducerRef = createReducer(
   initialState,
   on(loadFilters, onLoadFiltersReducerFunction)
 );

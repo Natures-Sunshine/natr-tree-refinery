@@ -1,5 +1,5 @@
 import {ActionReducerMap, MetaReducer} from '@ngrx/store';
-import {setFilterReducer} from '../set-filter.reducer';
+import {setFilterReducer} from './set-filter.reducer';
 
 
 export const treeRefineryStateFeatureKey = 'treeRefineryState';
