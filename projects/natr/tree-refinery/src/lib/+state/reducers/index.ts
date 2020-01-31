@@ -1,16 +1,16 @@
 import {ActionReducerMap, MetaReducer} from '@ngrx/store';
-import {filterFeatureKey, setFilterReducer} from '../set-filter.reducer';
+import {setFilterReducer} from '../set-filter.reducer';
 
 
 export const treeRefineryStateFeatureKey = 'treeRefineryState';
 
 // tslint:disable-next-line:no-empty-interface
 export interface TreeRefineryState {
-  [filterFeatureKey]: any;
+  treeFilter: any;
 }
 
 export const reducers: ActionReducerMap<TreeRefineryState> = {
-  [filterFeatureKey]: setFilterReducer
+  treeFilter: setFilterReducer
 };
 
 

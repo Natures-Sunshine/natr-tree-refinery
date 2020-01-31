@@ -1,4 +1,4 @@
-import {Action, ActionType, createReducer, on} from '@ngrx/store';
+import {Action, createReducer, on} from '@ngrx/store';
 import {loadFilters, LoadFiltersPropType} from './set-filter.actions';
 
 
@@ -9,16 +9,17 @@ export interface FilterState {
 
 }
 
-export const initialState: FilterState = {
-
-};
+export const initialState: FilterState = {};
 
 const onLoadFiltersReducerFunction = (state: FilterState, action: LoadFiltersPropType & Action) => {
   return {...state, ...action.filter};
 };
 
-export const setFilterReducer = createReducer(
+export const setFilterReducerRef = createReducer(
   initialState,
   on(loadFilters, onLoadFiltersReducerFunction)
 );
 
+export function setFilterReducer(state, action) {
+  return setFilterReducerRef(state, action);
+}
