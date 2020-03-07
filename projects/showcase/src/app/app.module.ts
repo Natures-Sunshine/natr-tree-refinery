@@ -8,6 +8,7 @@ import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {TreeRefineryModule} from '../../../natr/tree-refinery/src/lib/tree-refinery.module';
 import {TheTreesModule} from '@natr/the-trees';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import {TheTreesModule} from '@natr/the-trees';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),

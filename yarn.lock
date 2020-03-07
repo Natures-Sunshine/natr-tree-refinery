@@ -906,12 +906,15 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.2.tgz#26520bf09abe4a5644cd5414e37125a8954241dd"
   integrity sha512-tsAQNx32a8CoFhjhijUIhI4kccIAgmGhy8LZMZgGfmXcpMbPRUqn5LWmgRttILi6yeGmBJd2xsPkFMs0PzgPCw==
 
-"@natr/the-trees@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@natr/the-trees/-/the-trees-0.0.13.tgz#4d6e866211017ebb2a73758ba7b6388b0558e623"
-  integrity sha512-oubN2/jyuoubGwdP2YxpuF4kZc7JjIlcRnjSUhaouYUXvatta6NgqYR+5vbJ11DYOHf0S8JjbfKtNZ6uh8KcCA==
-  dependencies:
-    tslib "^1.9.0"
+"@natr/historian@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@natr/historian/-/historian-0.0.4.tgz#2b4cf077e2d9340efdf552586985e0cd8979e13e"
+  integrity sha512-z6o+ddhth6EuHiNuREiZiSY46FQW7XEAuxtOkEhX05wRc0GSjwwsR0vSZR7C7FRhvNhyEgkwzOKF7GZzblGNHg==
+
+"@natr/the-trees@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@natr/the-trees/-/the-trees-1.0.0.tgz#e89d24ec8af96a76428cd2926d54547c6d9e7c40"
+  integrity sha512-VcqfYcd8XkLHhr6qwd6SGJJvi0mOHb04LaomilMTFJdCxEIZrKbZuNTbz9B+OZVuDw2CDEAKqM1KdU9ZMjb6yQ==
 
 "@ngrx/effects@^8.6.0":
   version "8.6.0"

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Store} from '@ngrx/store';
-import {loadFilters} from '../+state/set-filter.actions';
+import {addFilter} from '../+state/add-filter.actions';
+import {clearFilters} from '../+state/clear-filters.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,12 @@ export class FilterFacadeService {
   constructor(private store: Store<any>) {
   }
 
-  dispatchLoadFilters(filter: any) {
-    this.store.dispatch(loadFilters({filter}));
+  dispatchAddFilter(filter: any) {
+    this.store.dispatch(addFilter({filter}));
+  }
+
+  dispatchClearFilters() {
+    this.store.dispatch(clearFilters());
   }
 
   getFilterSubscription() {

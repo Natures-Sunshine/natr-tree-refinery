@@ -1,13 +1,17 @@
 <lib-tree-refinery></lib-tree-refinery>
-<button (click)="setFilter()">Click me</button>
+<button (click)="setFilter()">Filter</button>
+<button (click)="clear()">Clear</button>
 <lib-the-trees>
   <ng-template #nodeTemplate [ngIf]="!node?.meta?.filterMatch" let-node>
-    <ng-container *ngIf="node?.meta?.filterMatch">
+<!--    {{logger.debug('node is template', node)}}-->
+    <ng-container *ngIf="node?.customMeta?.filterMatch">
+<!--      {{logger.debug('filter')}}-->
       <svg class="node">
         <circle r="10" cy="10" cx="10" fill="blue" stroke-width="" />
       </svg>
     </ng-container>
-    <ng-container *ngIf="!node?.meta?.filterMatch">
+    <ng-container *ngIf="!node?.customMeta?.filterMatch">
+<!--      {{logger.debug('no filter')}}-->
       <svg class="node-group">
         <circle r="10" cy="10" cx="10" fill="blue" stroke-width="" />
       </svg>

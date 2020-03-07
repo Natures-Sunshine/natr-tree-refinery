@@ -6,8 +6,8 @@ export interface LoadFiltersPropType<T extends TreeNodeModel = TreeNodeModel> {
   filter: T;
 }
 
-export const loadFilters = createAction(
-  '[SetFilter] Load Filters',
+export const addFilter = createAction(
+  '[SetFilter] Add Filters',
   props<LoadFiltersPropType>()
 );
 

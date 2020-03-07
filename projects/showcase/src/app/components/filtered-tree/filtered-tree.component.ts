@@ -1,7 +1,9 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FilterFacadeService} from '../../../../../natr/tree-refinery/src/lib/services/filter-facade.service';
 import {TreeDataFacadeService} from '@natr/the-trees';
+import {HistorianService, Logging} from '@natr/historian';
 
+@Logging
 @Component({
   selector: 'app-filtered-tree',
   templateUrl: './filtered-tree.component.html',
@@ -9,6 +11,7 @@ import {TreeDataFacadeService} from '@natr/the-trees';
   encapsulation: ViewEncapsulation.None
 })
 export class FilteredTreeComponent implements OnInit {
+  logger: HistorianService;
   nodeClass = 'node';
 
   constructor(private filterFacadeService: FilterFacadeService, private treeDataFacadeService: TreeDataFacadeService) {
@@ -19,10 +22,17 @@ export class FilteredTreeComponent implements OnInit {
   }
 
   setFilter() {
-    this.filterFacadeService.dispatchLoadFilters({id: '1', data: {color: '#a27ea9', fing: 'one'}});
+    this.filterFacadeService.dispatchAddFilter({data: {fing: 'one'}});
+    this.filterFacadeService.dispatchAddFilter({id: '2'});
   }
 
-  getClass(node): string | void  {
+  clear() {
+    this.filterFacadeService.dispatchClearFilters();
+    // this.filterFacadeService.dispatchAddFilter({});
+  }
+
+
+  getClass(node): string | void {
     console.log(`${FilteredTreeComponent.name}.getClass node`, node);
     if (node && node.meta && node.meta.filterMatch) {
       return 'node-inactive';

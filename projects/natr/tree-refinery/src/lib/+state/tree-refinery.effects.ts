@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {loadFilters, LoadFiltersPropType} from './set-filter.actions';
+import {addFilter, LoadFiltersPropType} from './add-filter.actions';
 import {concatMap, tap, withLatestFrom} from 'rxjs/operators';
 import {Action, Store} from '@ngrx/store';
 import {of} from 'rxjs';
@@ -8,12 +8,20 @@ import {loadLocalTreesAction, selectTreeData} from '@natr/the-trees';
 import {TreeModel} from '@natr/the-trees/lib/models/tree.model';
 import {TreeNodeModel} from '@natr/the-trees/lib/models/tree-node.model';
 import * as _ from 'lodash';
+import {HistorianService, Logging} from '@natr/historian';
+import {clearFilters} from './clear-filters.actions';
 
 
+@Logging
 @Injectable()
 export class TreeRefineryEffects {
 
+  constructor(private actions$: Actions, private store: Store<any>) {
+  }
+
   public static readonly FilteredKey = 'filtered';
+
+  private logger: HistorianService;
 
   private withState = concatMap(
     (action: Action) => of(action)
@@ -24,13 +32,14 @@ export class TreeRefineryEffects {
 
   treeRefineryEffect$ = createEffect(() => {
       return this.actions$.pipe(
-        ofType(loadFilters),
+        ofType(addFilter),
         this.withState,
         tap(
           ([action, treeData]: [LoadFiltersPropType & Action, TreeModel]) => {
-            console.log(`${TreeRefineryEffects.name}.treeRefineryEffect action`, action);
-            console.log(`${TreeRefineryEffects.name}.treeRefineryEffect treeData`, treeData);
-            TreeRefineryEffects.search(action.filter, treeData.nodes);
+            this.logger.debug(`.treeRefineryEffect action`, action);
+            this.logger.debug(`.treeRefineryEffect treeData`, treeData);
+            this.search(action.filter, treeData.nodes);
+            this.logger.debug('new treeData', treeData);
             this.store.dispatch(loadLocalTreesAction({treeData}));
           }
         )
@@ -39,24 +48,57 @@ export class TreeRefineryEffects {
     {dispatch: false}
   );
 
-  constructor(private actions$: Actions, private store: Store<any>) {
+  clearFiltersEffect$ = createEffect(() => {
+      return this.actions$.pipe(
+        ofType(clearFilters),
+        this.withState,
+        tap(
+          ([action, treeData]: [LoadFiltersPropType & Action, TreeModel]) => {
+            const newTreeData: TreeModel = _.cloneDeep(treeData);
+            this.logger.debug(`.clearFiltersEffect treeData`, treeData);
+            newTreeData.nodes.forEach(
+              (node, itemNumber) => {
+                this.logger.debug(`.clearFiltersEffect node ${itemNumber}`, node);
+                if (node.customMeta && node.customMeta.filterMatch) {
+                  this.logger.debug(`.clearFiltersEffect deleting filter`);
+                  delete node.customMeta.filterMatch;
+                }
+              }
+            );
+            this.logger.debug(`.clearFiltersEffect newTreeData`, newTreeData);
+            this.store.dispatch(loadLocalTreesAction({treeData: newTreeData}));
+          }
+        )
+      );
+    },
+    {dispatch: false}
+  );
+
+  private addToLists(res, deeper, listKey, key) {
+    this.logger.debug('res, deeper, listKey, key', res, deeper, listKey, key);
+    deeper[listKey].forEach(
+      item => res[listKey].add(`${key}.${item}`)
+    );
   }
 
-  private static search(searchObject: TreeNodeModel, nodes: TreeNodeModel[]): void {
-    console.log(`${TreeRefineryEffects.name}.search searchObject`, searchObject);
+  private search(searchObject: TreeNodeModel, nodes: TreeNodeModel[]): void {
+    this.logger.debug(`${TreeRefineryEffects.name}.search searchObject`, searchObject);
     nodes.forEach(
       node => {
-        console.log(`${TreeRefineryEffects.name}.search node`, node);
-        const diff = TreeRefineryEffects.getObjectDiff(searchObject, node);
-        console.log(`${TreeRefineryEffects.name} diff`, diff);
+        this.logger.debug(`${TreeRefineryEffects.name}.search node`, node);
+        const diff = this.getObjectDiff(searchObject, node);
+        this.logger.debug(`${TreeRefineryEffects.name} diff`, diff);
         if (diff.matchingKeys.size > 0 && diff.matchingKeys.size > diff.different.size) {
-          node.meta.filterMatch = true;
+          if (!node.customMeta) {
+            node.customMeta = {};
+          }
+          node.customMeta.filterMatch = true;
         }
       }
     );
   }
 
-  private static getObjectDiff(a, b) {
+  private getObjectDiff(a, b) {
     const result: {
       matchingKeys: Set<string>
       different: Set<string>,
@@ -73,14 +115,12 @@ export class TreeRefineryEffects {
       if (b.hasOwnProperty(key)) {
         res.matchingKeys.add(key);
         if (_.isEqual(value, b[key])) {
-          console.log(`${TreeRefineryEffects.name} type of matching value`, typeof value);
-          console.log(`${TreeRefineryEffects.name} typeof (value) !== typeof ({})`, typeof (value) !== typeof ({}));
-          console.log(`${TreeRefineryEffects.name} typeof (value) === typeof ({}))`, typeof (value) === typeof ({}));
-          console.log(`${TreeRefineryEffects.name} typeof typeof ({})`, typeof ({}));
+          this.logger.debug(`type of matching value`, typeof value);
+          this.logger.debug(`value, b[${key}]`, value, b[key]);
           if (typeof (value) !== typeof ({})) {
           } else {
-            console.log('going deeper');
-            res = TreeRefineryEffects.getObjectDiff(a[key], b[key]);
+            this.logger.debug('going deeper');
+            res = this.getObjectDiff(a[key], b[key]);
           }
           return res;
         } else {
@@ -90,13 +130,13 @@ export class TreeRefineryEffects {
             return res;
           } else {
             res.different.add(key);
-            const deeper = TreeRefineryEffects.getObjectDiff(a[key], b[key]);
-            console.log(`${TreeRefineryEffects.name} deeper`, deeper);
+            const deeper = this.getObjectDiff(a[key], b[key]);
+            this.logger.debug(`deeper`, deeper);
 
-            TreeRefineryEffects.addToLists(res, deeper, 'matchingKeys', key);
-            TreeRefineryEffects.addToLists(res, deeper, 'different', key);
-            TreeRefineryEffects.addToLists(res, deeper, 'missingFromFirst', key);
-            TreeRefineryEffects.addToLists(res, deeper, 'missingFromSecond', key);
+            this.addToLists(res, deeper, 'matchingKeys', key);
+            this.addToLists(res, deeper, 'different', key);
+            this.addToLists(res, deeper, 'missingFromFirst', key);
+            this.addToLists(res, deeper, 'missingFromSecond', key);
 
             return res;
           }
@@ -117,11 +157,5 @@ export class TreeRefineryEffects {
     }, result);
 
     return result;
-  }
-
-  private static addToLists(res, deeper, listKey, key) {
-    deeper[listKey].forEach(
-      item => res[listKey].add(`${key}.${item}`)
-    );
   }
 }
