@@ -12,7 +12,11 @@ export class FilterFacadeService {
   }
 
   dispatchAddFilter(filter: any) {
-    this.store.dispatch(addFilter({filter}));
+    this.store.dispatch(addFilter({filter, addOrRemove: true}));
+  }
+
+  dispatchRemoveFilter(filter: any) {
+    this.store.dispatch(addFilter({filter, addOrRemove: false}));
   }
 
   dispatchClearFilters() {

@@ -1,6 +1,10 @@
 <lib-tree-refinery></lib-tree-refinery>
-<button (click)="setFilter()">Filter</button>
-<button (click)="clear()">Clear</button>
+<button (click)="setFilter()">Both Filters</button>
+<button (click)="setFilter1()">Filter 1</button>
+<button (click)="setFilter2()">Filter 2</button>
+<button (click)="clear1()">clear 1</button>
+<button (click)="clear2()">clear 2</button>
+<button (click)="clear()">Clear all</button>
 <lib-the-trees>
   <ng-template #nodeTemplate [ngIf]="!node?.meta?.filterMatch" let-node>
 <!--    {{logger.debug('node is template', node)}}-->

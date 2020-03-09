@@ -4,6 +4,7 @@ import {TreeNodeModel} from '@natr/the-trees/lib/models/tree-node.model';
 
 export interface LoadFiltersPropType<T extends TreeNodeModel = TreeNodeModel> {
   filter: T;
+  addOrRemove: boolean;
 }
 
 export const addFilter = createAction(

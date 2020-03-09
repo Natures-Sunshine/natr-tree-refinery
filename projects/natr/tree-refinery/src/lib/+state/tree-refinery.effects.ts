@@ -38,7 +38,7 @@ export class TreeRefineryEffects {
           ([action, treeData]: [LoadFiltersPropType & Action, TreeModel]) => {
             this.logger.debug(`.treeRefineryEffect action`, action);
             this.logger.debug(`.treeRefineryEffect treeData`, treeData);
-            this.search(action.filter, treeData.nodes);
+            this.search(action.filter, treeData.nodes, action.addOrRemove);
             this.logger.debug('new treeData', treeData);
             this.store.dispatch(loadLocalTreesAction({treeData}));
           }
@@ -81,7 +81,7 @@ export class TreeRefineryEffects {
     );
   }
 
-  private search(searchObject: TreeNodeModel, nodes: TreeNodeModel[]): void {
+  private search(searchObject: TreeNodeModel, nodes: TreeNodeModel[], addOrClear = true): void {
     this.logger.debug(`${TreeRefineryEffects.name}.search searchObject`, searchObject);
     nodes.forEach(
       node => {
@@ -92,7 +92,7 @@ export class TreeRefineryEffects {
           if (!node.customMeta) {
             node.customMeta = {};
           }
-          node.customMeta.filterMatch = true;
+          node.customMeta.filterMatch = addOrClear;
         }
       }
     );

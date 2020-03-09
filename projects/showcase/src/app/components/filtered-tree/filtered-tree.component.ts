@@ -22,8 +22,24 @@ export class FilteredTreeComponent implements OnInit {
   }
 
   setFilter() {
+    this.setFilter1();
+    this.setFilter2();
+  }
+
+  setFilter1() {
     this.filterFacadeService.dispatchAddFilter({data: {fing: 'one'}});
+  }
+
+  setFilter2() {
     this.filterFacadeService.dispatchAddFilter({id: '2'});
+  }
+
+  clear1() {
+    this.filterFacadeService.dispatchRemoveFilter({data: {fing: 'one'}});
+  }
+
+  clear2() {
+    this.filterFacadeService.dispatchRemoveFilter({id: '2'});
   }
 
   clear() {
