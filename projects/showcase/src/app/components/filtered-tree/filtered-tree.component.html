@@ -6,8 +6,7 @@
 <button (click)="clear2()">clear 2</button>
 <button (click)="clear()">Clear all</button>
 <lib-the-trees>
-  <ng-template #nodeTemplate [ngIf]="!node?.customMeta?.filterMatch" let-node>
-<!--    {{logger.debug('node is template', node)}}-->
+  <ng-template #nodeTemplate let-node>
     <ng-container *ngIf="node?.customMeta?.filterMatch">
 <!--      {{logger.debug('filter')}}-->
       <svg class="node">

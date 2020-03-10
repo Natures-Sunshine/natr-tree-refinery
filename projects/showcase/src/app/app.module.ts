@@ -7,8 +7,8 @@ import { FilteredTreeComponent } from './components/filtered-tree/filtered-tree.
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {TreeRefineryModule} from '../../../natr/tree-refinery/src/lib/tree-refinery.module';
-import {TheTreesModule} from '@natr/the-trees';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TheTreesModule} from '@natr/the-trees';
 
 @NgModule({
   declarations: [
@@ -21,8 +21,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AppRoutingModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    TreeRefineryModule,
-    TheTreesModule
+    TheTreesModule,
+    TreeRefineryModule
   ],
   providers: [],
   bootstrap: [AppComponent]

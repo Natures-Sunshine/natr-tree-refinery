@@ -36,6 +36,7 @@ export class TreeRefineryEffects {
         this.withState,
         tap(
           ([action, treeData]: [LoadFiltersPropType & Action, TreeModel]) => {
+            treeData = _.cloneDeep(treeData);
             this.logger.debug(`.treeRefineryEffect action`, action);
             this.logger.debug(`.treeRefineryEffect treeData`, treeData);
             this.search(action.filter, treeData.nodes, action.addOrRemove);
